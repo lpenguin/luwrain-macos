@@ -1,0 +1,37 @@
+//Java settings
+apply plugin: 'java'
+archivesBaseName ='luwrain-macos'
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+        }
+    }
+}
+
+
+//Cpp settings
+//apply plugin: 'cpp'
+//libraries {
+//    luwrainMacosJni {
+//        binaries.all {
+//            cppCompiler.args "-I/System/Library/Frameworks/JavaVM.framework/Headers",
+//                    "-I/System/Library/Frameworks/ApplicationServices.framework/Frameworks/SpeechSynthesis.framework/Headers"
+//            linker.args "-F/System/Library/Frameworks", "-lApplicationServices"
+//        }
+//    }
+//}
+//
+//
+//
+//sources {
+//    luwrainMacosJni {
+//        cpp {
+//            source {
+//                srcDir "src/main/jni/"
+//                include "**/*.cpp"
+//            }
+//        }
+//    }
+//}

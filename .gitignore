@@ -1,0 +1,9 @@
+.idea/
+.gradle/
+build/
+jni/bin/
+jni/lib/
+jni/build/
+jni/.idea/
+jni/src/headers/generated/
+*.iml
