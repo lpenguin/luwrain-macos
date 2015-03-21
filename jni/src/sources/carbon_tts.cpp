@@ -46,7 +46,8 @@ void CarbonTts::say(string text) throw(OSException){
 
 void CarbonTts::createSpeechChannel(VoiceSpec voiceSpec) throw(OSException, CarbonTtsException){
     if(speechChannel != nullptr){
-        throw new CarbonTtsException("Speech channel already exists");
+        cerr<<"Speech channel already created!"<<endl;
+        throw new CarbonTtsException("Speech channel already created");
     }
 
     OSException::checkOSError(NewSpeechChannel(&voiceSpec, &speechChannel));

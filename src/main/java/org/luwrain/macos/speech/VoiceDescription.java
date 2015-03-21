@@ -1,4 +1,4 @@
-package org.luwrain.os.speech;
+package org.luwrain.macos.speech;
 
 /**
  * Created by nikita on 07.10.14.

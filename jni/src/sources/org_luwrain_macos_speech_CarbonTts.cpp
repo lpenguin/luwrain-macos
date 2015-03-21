@@ -1,4 +1,4 @@
-#include "org_luwrain_os_speech_CarbonTts.h"
+#include "org_luwrain_macos_speech_CarbonTts.h"
 #include "carbon_tts.h"
 #include "handle.h"
 
@@ -6,23 +6,22 @@
 
 using namespace std;
 
-void Java_org_luwrain_os_speech_CarbonTts_native_1initialize(JNIEnv *env, jobject obj) {
-    cout<<"Java_org_luwrain_os_speech_CarbonTts_native_1initialize"<<endl;
+void Java_org_luwrain_macos_speech_CarbonTts_native_1initialize(JNIEnv *env, jobject obj) {
+    cout<<"Java_org_luwrain_macos_speech_CarbonTts_native_1initialize"<<endl;
     CarbonTts * talker = new CarbonTts();
     setHandle(env, obj, talker);
 }
 
-void Java_org_luwrain_os_speech_CarbonTts_native_1say(JNIEnv *env, jobject obj, jstring jtext) {
-    cout<<"Java_org_luwrain_os_speech_CarbonTts_native_1say"<<endl;
+void Java_org_luwrain_macos_speech_CarbonTts_native_1say(JNIEnv *env, jobject obj, jstring jtext) {
+    cout<<"Java_org_luwrain_macos_speech_CarbonTts_native_1say"<<endl;
     const char *text = env->GetStringUTFChars(jtext, 0);
     cout<<"Say() text: "<<text<<endl;
     getHandle<CarbonTts>(env, obj)->say(text);
 }
 
-void Java_org_luwrain_os_speech_CarbonTts_native_1createChannel(JNIEnv *env, jobject obj, jint channelIndex) {
-    cout<<"Java_org_luwrain_os_speech_CarbonTts_native_1createChannel"<<endl;
+void Java_org_luwrain_macos_speech_CarbonTts_native_1createChannel(JNIEnv *env, jobject obj, jint channelIndex) {
+    cout<<"Java_org_luwrain_macos_speech_CarbonTts_native_1createChannel() channelIndex: "<<channelIndex<<endl;
     getHandle<CarbonTts>(env, obj)->createSpeechChannel(channelIndex);
-
 }
 
 char* Str63tocstr(Str63 str){
@@ -33,9 +32,9 @@ char* Str63tocstr(Str63 str){
     return result;
 }
 
-jobjectArray Java_org_luwrain_os_speech_CarbonTts_native_1getVoices(JNIEnv *env, jobject obj) {
-    cout<<"Java_org_luwrain_os_speech_CarbonTts_native_1getVoices"<<endl;
-    jclass voiceDescClass = env->FindClass("org/luwrain/os/speech/VoiceDescription");
+jobjectArray Java_org_luwrain_macos_speech_CarbonTts_native_1getVoices(JNIEnv *env, jobject obj) {
+    cout<<"Java_org_luwrain_macos_speech_CarbonTts_native_1getVoices"<<endl;
+    jclass voiceDescClass = env->FindClass("org/luwrain/macos/speech/VoiceDescription");
     cout<<"Found class: "<<voiceDescClass<<endl;
     jmethodID ctorId = env->GetMethodID(voiceDescClass, "<init>", "(Ljava/lang/String;I)V");
     cout<<"with ctorId: "<<ctorId<<endl;
@@ -52,8 +51,8 @@ jobjectArray Java_org_luwrain_os_speech_CarbonTts_native_1getVoices(JNIEnv *env,
     return res;
 }
 
-void Java_org_luwrain_os_speech_CarbonTts_dispose(JNIEnv *env, jobject obj) {
-    cout<<"Java_org_luwrain_os_speech_CarbonTts_dispose"<<endl;
+void Java_org_luwrain_macos_speech_CarbonTts_dispose(JNIEnv *env, jobject obj) {
+    cout<<"Java_org_luwrain_macos_speech_CarbonTts_dispose"<<endl;
     CarbonTts * talker = getHandle<CarbonTts>(env, obj);
     setHandle<CarbonTts>(env, obj, nullptr);
     delete talker;

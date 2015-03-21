@@ -1,5 +1,20 @@
+/*
+   Copyright 2012-2015 Michael Pozhidaev <msp@altlinux.org>
 
-package org.luwrain.os;
+   This file is part of the Luwrain.
+
+   Luwrain is free software; you can redistribute it and/or
+   modify it under the terms of the GNU General Public
+   License as published by the Free Software Foundation; either
+   version 3 of the License, or (at your option) any later version.
+
+   Luwrain is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   General Public License for more details.
+*/
+
+package org.luwrain.macos.term;
 
 import java.util.Vector;
 
@@ -21,20 +36,20 @@ public class Terminal
 
     public synchronized void open(String shellExp) throws TerminalException
     {
-        if (shellExp == null || shellExp.trim().isEmpty())
-            return;
-        fd = openPty();
-        if (fd < 0)
-            throw new TerminalException("open:" + errnoString());
-        pid = exec(fd, shellExp);
-        if (pid < 0)
-        {
-            final String message = errnoString();
-            close(fd);
-            fd = -1;
-            pid = -1;
-            throw new TerminalException(message);
-        }
+	if (shellExp == null || shellExp.trim().isEmpty())
+	    return;
+	fd = openPty(); 
+	if (fd < 0)
+	    throw new TerminalException("open:" + errnoString());
+	pid = exec(fd, shellExp);
+	if (pid < 0)
+	{
+	    final String message = errnoString();
+	    close(fd);
+	    fd = -1;
+	    pid = -1;
+	    throw new TerminalException(message);
+	}
     }
 
     public synchronized int getLineCount()

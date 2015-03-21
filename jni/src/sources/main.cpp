@@ -7,13 +7,16 @@ int main(int argc, char** argv){
     try{
         CarbonTts talker;
         cout<<"Getting voices list"<<endl;
-        string text = readInputText();
+
         cout<<"Creating speech channel"<<endl;
         talker.createSpeechChannel(chooseVoiceDescription(talker.getVoices()).voice);
+        cout<<"Type text: "<<endl;
+        string text = readInputText();
         cout<<"Trying to say"<<endl;
         talker.say(text);
-        sleep(10000);
+        sleep(1000);
         talker.destroySpeechChannel();
+        cout<<"Bye!"<<endl;
     }catch(OSException& ex){
         cout<<"Exception: "<<ex.what()<<endl;
         ex.printStacktrace();
@@ -29,7 +32,8 @@ VoiceDescription chooseVoiceDescription(const vector<VoiceDescription>& voices){
     cout<<"Availible voices: "<<endl;
     int i = 0;
     for(VoiceDescription description: voices){
-        cout<<"#"<<i++<<" "<<description.name<<" - "<<description.region<<endl;
+        cout<<"#"<<i<<" "<<description.name<<" (region "<<description.region<<")"<<endl;
+        i++;
     }
     int index;
     cout<<"Choose voice #";
@@ -40,6 +44,7 @@ VoiceDescription chooseVoiceDescription(const vector<VoiceDescription>& voices){
 
 string readInputText(){
     string line;
-    getline(cin, line);
+//    getline(cin, line);
+    cin>>line;
     return line;
 }

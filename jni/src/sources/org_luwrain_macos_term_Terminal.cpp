@@ -5,14 +5,14 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <poll.h>
-#include "org_luwrain_os_Terminal.h"
+#include "org_luwrain_macos_term_Terminal.h"
 
 #include <iostream>
 
 #define IO_BUF_SIZE 2048
 #define SHELL "/bin/sh"
 
-JNIEXPORT jint JNICALL Java_org_luwrain_os_Terminal_openPty(JNIEnv *, jclass) {
+JNIEXPORT jint JNICALL Java_org_luwrain_macos_term_Terminal_openPty(JNIEnv *, jclass) {
     const int res = posix_openpt(O_RDWR);
     if (res < 0)
         return res;
@@ -21,7 +21,7 @@ JNIEXPORT jint JNICALL Java_org_luwrain_os_Terminal_openPty(JNIEnv *, jclass) {
     return res;
 }
 
-JNIEXPORT jint JNICALL Java_org_luwrain_os_Terminal_exec(JNIEnv *env, jclass, jint pty, jstring cmd) {
+JNIEXPORT jint JNICALL Java_org_luwrain_macos_term_Terminal_exec(JNIEnv *env, jclass, jint pty, jstring cmd) {
     const char *ptyName = ptsname(pty);
     if (ptyName == NULL)
         return -1;
@@ -43,15 +43,15 @@ JNIEXPORT jint JNICALL Java_org_luwrain_os_Terminal_exec(JNIEnv *env, jclass, ji
     return pid;
 }
 
-JNIEXPORT void JNICALL Java_org_luwrain_os_Terminal_close(JNIEnv *, jclass, jint fd) {
+JNIEXPORT void JNICALL Java_org_luwrain_macos_term_Terminal_close(JNIEnv *, jclass, jint fd) {
     close(fd);
 }
 
-JNIEXPORT jstring JNICALL Java_org_luwrain_os_Terminal_errnoString(JNIEnv *env, jclass) {
+JNIEXPORT jstring JNICALL Java_org_luwrain_macos_term_Terminal_errnoString(JNIEnv *env, jclass) {
     return env->NewStringUTF(strerror(errno));
 }
 
-JNIEXPORT jstring JNICALL Java_org_luwrain_os_Terminal_collect(JNIEnv *env, jclass, jint pty) {
+JNIEXPORT jstring JNICALL Java_org_luwrain_macos_term_Terminal_collect(JNIEnv *env, jclass, jint pty) {
     if (pty < 0)
         return env->NewStringUTF("");;
     std::string output;
